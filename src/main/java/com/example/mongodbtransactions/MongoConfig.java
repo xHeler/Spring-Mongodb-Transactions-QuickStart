@@ -11,6 +11,8 @@ import org.springframework.data.mongodb.MongoDatabaseFactory;
 import org.springframework.data.mongodb.MongoTransactionManager;
 import org.springframework.data.mongodb.config.AbstractMongoClientConfiguration;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
+
+
 @Configuration
 @EnableMongoRepositories(basePackages = "com.example.mongodbtransactions")
 public class MongoConfig extends AbstractMongoClientConfiguration {
@@ -36,5 +38,16 @@ public class MongoConfig extends AbstractMongoClientConfiguration {
     public MongoTransactionManager transactionManager(MongoDatabaseFactory dbFactory) {
         return new MongoTransactionManager(dbFactory);
     }
+
+    @Override
+    protected boolean autoIndexCreation() {
+        return true;
+    }
+
+    @Override
+    protected String getMappingBasePackage() {
+        return "com.example.mongodbtransactions";
+    }
 }
+
 
