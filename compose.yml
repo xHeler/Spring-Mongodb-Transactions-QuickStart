@@ -1,0 +1,16 @@
+services:
+  mongodb:
+    image: mongo:6.0.5
+    container_name: mongodb
+    restart: always
+    env_file:
+      - env/.env.database
+    volumes:
+      - ./config/database-init.js:/docker-entrypoint-initdb.d/database-init.js:ro
+    ports:
+      - '27017:27017'
+    healthcheck:
+      test: ["CMD","mongosh", "--eval", "db.adminCommand('ping')"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
